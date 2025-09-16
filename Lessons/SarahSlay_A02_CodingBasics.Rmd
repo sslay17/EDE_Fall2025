@@ -87,7 +87,6 @@ This exercise accompanies the lessons/labs in Environmental Data Analytics on co
   }
 }
 
-
 #11. Create a function using ifelse()
 GreaterThan50IE <- function(x){
   ifelse(x>50, print("Pass"), print("Fail"))
@@ -112,3 +111,4 @@ GreaterThan50IE(testscores)
 
 
 **NOTE** Before knitting, you'll need to comment out the call to the function in Q13 that does not work. (A document can't knit if the code it contains causes an error!)
+
