@@ -51,6 +51,7 @@ dim(EPA.air.PM.2019)
 dim(EPA.air.PM.2018)
 dim(EPA.air.O3.2019)
 dim(EPA.air.O3.2018)
+str(EPA.air.PM.2018$Date)
 ```
 
 >All four datasets should have the same number of columns but unique record counts (rows). Do your datasets follow this pattern?
@@ -69,10 +70,10 @@ Yes, my datasets all have 20 columns but have a different number of rows.
 
 ```{r questions 3 thru 4}
 #3 Use asdate function to change Date column from factor 
-EPA.air.PM.2018$Date <- as.Date(EPA.air.PM.2018$Date, format = "%Y-%m-%d")
-EPA.air.PM.2019$Date <- as.Date(EPA.air.PM.2019$Date, format = "%Y-%m-%d")
-EPA.air.O3.2018$Date <- as.Date(EPA.air.O3.2018$Date, format = "%Y-%m-%d")
-EPA.air.O3.2019$Date <- as.Date(EPA.air.O3.2019$Date, format = "%Y-%m-%d")
+EPA.air.PM.2018$Date <- mdy(EPA.air.PM.2018$Date)
+EPA.air.PM.2019$Date <- mdy(EPA.air.PM.2019$Date)
+EPA.air.O3.2018$Date <- mdy(EPA.air.O3.2018$Date)
+EPA.air.O3.2019$Date <- mdy(EPA.air.O3.2019$Date)
 
 #4 Select columns from each dataset using select function
 EPA.air.PM.2018 <- select(EPA.air.PM.2018, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
@@ -138,10 +139,10 @@ EPA.air.Filtered <-
   EPA.air %>%
   filter(Site.Name %in% Sites.filter) %>%
   group_by(Date, Site.Name, AQS_PARAMETER_DESC, COUNTY) %>%
-  summarise(meanAQI = mean(EPA.air$DAILY_AQI_VALUE), 
-            meanLat = mean(EPA.air$SITE_LATITUDE), 
-            meanLong = mean(EPA.air$SITE_LONGITUDE)
-            )
+  summarise(
+    meanAQI = mean(DAILY_AQI_VALUE), 
+    meanLat = mean(SITE_LATITUDE), 
+    meanLong = mean(SITE_LONGITUDE))
 
 #add month and  year columns using mutate function
 EPA.air.Filtered <- EPA.air.Filtered %>%
@@ -155,7 +156,6 @@ EPA.air.Filtered.spread <- pivot_wider(EPA.air.Filtered, names_from = AQS_PARAME
 
 #10 Show dataset dimensions 
 dim(EPA.air.Filtered.spread)
-#dimensions are too low but idk how to fix it sorry
 
 #11 Save dataset as .csv
 write.csv(EPA.air.Filtered.spread, file = "./Data/Processed/EPAair_O3_PM25_NC1819_Processed.csv")
