@@ -123,7 +123,7 @@ Box.TN <- ggplot (Chem.nutrients, aes(x=factor(month,levels = 1:12,labels = mont
   geom_boxplot() +
   theme(axis.title = element_blank(), legend.position = "None", axis.text.x = element_text(angle = 45, hjust = 1))
 
-#create a cowplot to combine 3 individual box plots and label each
+#create a cowplot to combine 3 individual box plots and label each plot
 Combo.plot <- plot_grid(Box.temp, Box.TP, Box.TN,
                         labels = c('Temperature (C)', 'Total Phosphorous','Total Nitrogen'),
                         label_x = c(-0.15, -0.15, -0.1),
@@ -131,7 +131,7 @@ Combo.plot <- plot_grid(Box.temp, Box.TP, Box.TN,
                         label_size = 12,
                         nrow = 1, 
                         align = 'hv')
-
+#add labels to the final cowplot that apply to all 3 plots simultaneously
 final_plot <- ggdraw() +
   draw_plot(Combo.plot, x = 0, y = 0.1, width = 1, height = 0.9) +
   # create X-axis label and adjust position
