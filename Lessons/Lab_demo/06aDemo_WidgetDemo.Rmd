@@ -1,0 +1,17 @@
+---
+title: Interactive Rmd
+output: html_document
+runtime: shiny
+---
+  
+```{r, echo = FALSE}
+#create widget = way to interact with data Ex. dropdown menu
+numericInput("n",
+"How many cars?", 5)
+
+#displays widget when clicking 'Run Document' in toolbar
+renderTable({
+head(cars, input$n)
+})
+```
+
